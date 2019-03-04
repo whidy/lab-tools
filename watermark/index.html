@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    #images {
+      padding: 10px;
+      margin: 20px;
+      border: 2px dashed red;
+    }
+    .img-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .img-wrapper img {
+      /* border: 2px solid #ccc; */
+    }
+
+    .img-wrapper .texts {
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
+      text-align: right;
+      line-height: 1.5;
+    }
+    canvas {
+      display: block;
+      margin: 20px;
+    }
+
+  </style>
+  <script src="./texts.js"></script>
+  <script src="./html2canvas.min.js"></script>
+</head>
+
+<body>
+  <div id="images">
+    <p>here are original images with texts</p>
+  </div>
+  <script>
+    var html = ""
+    for (var i = 0; i < texts.length; i++) {
+      (function (index) {
+        var queue = new Promise(function (resolve, reject) {
+          html =
+            '<div class="img-wrapper" id="i' + index + '">' +
+            '<img src="./sample.jpg" alt="">' +
+            '<div class="texts">' +
+            '<h3>' + texts[index].title + '</h3>' +
+            '<p>' + texts[index].description + '</p>' +
+            '</div>' +
+            '</div>';
+          document.getElementById('images').innerHTML += html
+          resolve()
+        }).then(function () {
+          html2canvas(document.querySelector('#i' + index)).then(canvas => {
+            document.body.appendChild(canvas)
+          });
+        })
+      })(i)
+    }
+  </script>
+</body>
+
+</html>

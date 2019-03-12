@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>rorate</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      .container {
+        position: relative;
+        overflow: hidden;
+      }
+      .container img {
+        vertical-align: top;
+      }
+      #text {
+        font-size: 18px;
+        position: absolute;
+        top: -999990px;
+        /* top: 0; */
+        color: black;
+        line-height: 18px;
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <span id="text">用户名：mmmmmmmmmmmm</span> -->
+    <span id="text">用户名：whidy</span>
+    <div id="container" class="container">
+      <img src="./img.png" onload="genCanvas()" alt="" width="100%" height="" />
+    </div>
+    <script>
+      function genCanvas() {
+        const UNIT_DEG = Math.PI / 180;
+        var rorateDeg = 30 * UNIT_DEG;
+        var container = document.getElementById("container");
+        var CANVAS_WIDTH = container.offsetWidth / Math.cos(rorateDeg) + container.offsetHeight * Math.sin(rorateDeg);
+        var CANVAS_HEIGHT = container.offsetWidth * Math.sin(rorateDeg) + container.offsetHeight * Math.cos(rorateDeg);
+        console.log(CANVAS_WIDTH);
+        
+        var canvas = document.createElement("canvas");
+        canvas.id = "myCanvas";
+        canvas.width = CANVAS_WIDTH;
+        canvas.height = CANVAS_HEIGHT;
+        canvas.style.position = "absolute";
+        canvas.style.top = "0";
+        canvas.style.left = "0";
+        container.appendChild(canvas);
+
+        var ctx = canvas.getContext("2d");
+        ctx.rotate(rorateDeg);
+        let text = document.getElementById("text").innerText;
+        const TEXT_WIDTH =
+          document.getElementById("text").offsetWidth < 70
+            ? 70
+            : document.getElementById("text").offsetWidth;
+        const TEXT_HEIGHT = 36;
+        
+        for (var i = 0; i < Math.ceil(CANVAS_HEIGHT / TEXT_HEIGHT); i++) {
+          for (var j = 0; j < Math.ceil(CANVAS_WIDTH / TEXT_WIDTH); j++) {
+            ctx.save();
+            ctx.fillStyle = "rgb(" + 51 * i + ", " + (255 - 51 * i) + ", 255)";
+            ctx.textBaseline = "top";
+            ctx.translate(j * TEXT_WIDTH, i * TEXT_HEIGHT);
+            ctx.fillText(text, 0, -container.offsetWidth *  Math.sin(rorateDeg));
+            ctx.restore();
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -13,8 +13,8 @@ make tools
 
 给一张图片加上重复的水印的临时处理方案。
 
-* [getImageData循环方案](./index.html)
-* [图形循环后旋转方案](./index_2.html)
+* [getImageData循环方案](./watermark-in-one/index.html)
+* [图形循环后旋转方案](./watermark-in-one/index_2.html)
 
 相关canvas教程：<https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API/Tutorial>
 

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" data-dpr="1" style="font-size: 37.5px;" class="outside">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>rorate</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      .container {
+        position: relative;
+      }
+      .container img {
+        vertical-align: top;
+      }
+      #text {
+        font-size: 18px;
+        position: absolute;
+        top: -999990px;
+        /* top: 0; */
+        color: black;
+        line-height: 18px;
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <span id="text">用户名：mmmmmmmmmmmm</span> -->
+    <span id="text">用户名：whidy</span>
+    <div id="container" class="container">
+      <img src="./img.png" onload="genCanvas()" alt="" width="100%" height="" />
+    </div>
+    <script>
+      function genCanvas() {
+        var container = document.getElementById("container");
+        var CANVAS_WIDTH = container.offsetWidth;
+        var CANVAS_HEIGHT = container.offsetHeight;
+        var canvas = document.createElement("canvas");
+        canvas.id = "myCanvas";
+        canvas.width = CANVAS_WIDTH;
+        canvas.height = CANVAS_HEIGHT;
+        canvas.style.position = "absolute";
+        canvas.style.top = "0";
+        canvas.style.left = "0";
+        container.appendChild(canvas);
+        const UNIT_DEG = Math.PI / 180;
+        var rorateDeg = 30 * UNIT_DEG;
+        const TEXT_HEIGHT = 36;
+
+        let text = document.getElementById("text").innerText;
+        const TEXT_WIDTH =
+          document.getElementById("text").offsetWidth < 70
+            ? 70
+            : document.getElementById("text").offsetWidth;
+
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        ctx.rotate(rorateDeg);
+        ctx.fillStyle = "rgba(0,0,0,0.4)";
+        ctx.font = "18px PingFang";
+        ctx.textBaseline = "top";
+
+        // ctx.fillRect(
+        //   TEXT_HEIGHT * Math.sin(rorateDeg) * Math.cos(rorateDeg),
+        //   TEXT_HEIGHT * Math.cos(rorateDeg) * Math.cos(rorateDeg) - TEXT_HEIGHT,
+        //   TEXT_WIDTH,
+        //   TEXT_HEIGHT
+        // );
+        ctx.fillText(
+          text,
+          TEXT_HEIGHT * Math.sin(rorateDeg) * Math.cos(rorateDeg),
+          TEXT_HEIGHT * Math.cos(rorateDeg) * Math.cos(rorateDeg) - TEXT_HEIGHT
+        );
+
+        const IMG_WIDTH =
+          (TEXT_WIDTH * Math.cos(rorateDeg) +
+            TEXT_HEIGHT * Math.sin(rorateDeg)) *
+          1.2;
+        const IMG_HEIGHT =
+          TEXT_WIDTH * Math.sin(rorateDeg) + TEXT_HEIGHT * Math.cos(rorateDeg);
+
+        var imgData = ctx.getImageData(0, 0, IMG_WIDTH, IMG_HEIGHT);
+        ctx.putImageData(imgData, IMG_WIDTH, IMG_HEIGHT);
+        for (let i = 0; i < Math.ceil(CANVAS_WIDTH / IMG_WIDTH); i++) {
+          for (let j = 0; j < Math.ceil(CANVAS_HEIGHT / IMG_HEIGHT); j++) {
+            ctx.putImageData(imgData, IMG_WIDTH * i, IMG_HEIGHT * j);
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

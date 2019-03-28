@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Jump page</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      .wrap {
+        width: 500px;
+        height: 200px;
+      }
+      button {
+        border: 5px solid red;
+
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      这是emd的跳转页面，<br/>点击
+      <button onclick="send()">这里</button>
+      生成cookie在51la.com<br/>兼容性<a
+        href="https://caniuse.com/#search=postMessage"
+        target="_blank"
+        >postMessage</a
+      >
+    </div>
+    <iframe
+      src="http://51la.com:8080"
+      frameborder="1"
+      width="500"
+      height="400"
+      id="iframe"
+      name="yaola"
+    ></iframe>
+    <script>
+      // console.log(window.frames.yaola)
+      var fn = {
+        name: "cookie",
+        arguments: ["edm", "fdjiognret43t8v8dv"]
+      };
+      function send() {
+        console.log('sending');
+        window.frames.yaola.postMessage(
+          JSON.stringify(fn),
+          "http://51la.com:8080"
+        );
+        return false;
+      }
+      // window.onload = send;
+      // let win = window.frames.example;
+      // win.postMessage("message", "*");
+      function receiveMessage(event) {
+        if (event.origin !== "http://51la.com:8080") return;
+      }
+      window.addEventListener("message", receiveMessage, false);
+    </script>
+  </body>
+</html>

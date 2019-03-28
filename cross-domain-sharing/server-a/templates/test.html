@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  test page
+  <script>
+    console.log(' === next log is from:', location.host, ' === ')
+    console.log('cookie:', document.cookie)
+    // console.log(parent.document.location);
+    console.log(' === log end === ')
+    // window.postMessage('hahahahah', 'http://51la.com:8080')
+    function receiveMessage(event) {
+      console.log(event.origin);
+      if (event.origin !== 'http://' + window.name) return;
+      console.log('bingo! ready to send: ', event.data)
+      event.source.postMessage(document.cookie, event.origin)
+    }
+
+    window.addEventListener("message", receiveMessage, false);
+    // window.postMessage('hahahahah', 'http://' + window.name)
+    // function receiveMessage(event) {
+    //   if (event.origin !== "http://51la.com:8080/") return;
+    //   console.log('bingo!', event.data)
+    // }
+  </script>
+</body>
+</html>

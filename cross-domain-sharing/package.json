@@ -1,0 +1,22 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "sa": "nodemon ./server-a/server.js",
+    "sb": "nodemon ./server-b/server.js",
+    "sc": "nodemon ./server-c/server.js",
+    "s": "npm run sa && npm run sb && npm run sc"
+  },
+  "devDependencies": {
+    "art-template": "^4.13.2",
+    "handlebars": "^4.1.1",
+    "hapi": "^18.1.0",
+    "inert": "^5.1.2",
+    "koa": "^2.7.0",
+    "koa-art-template": "^1.1.1",
+    "koa-router": "^7.4.0",
+    "vision": "^5.4.4"
+  }
+}

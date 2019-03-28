@@ -40,9 +40,18 @@
     ></iframe>
     <script>
       // console.log(window.frames.yaola)
+      function random() {
+        let text = ''
+        let possible = 'abcdefghijklmnopqrstuvwxyz0123456789'
+        for (let i = 0; i < 32; i++) {
+          text += possible.charAt(Math.floor(Math.random() * possible.length))
+        }
+        return text
+      }
+      var cookieVal = random()
       var fn = {
         name: "cookie",
-        arguments: ["edm", "fdjiognret43t8v8dv"]
+        arguments: ["edm", cookieVal]
       };
       function send() {
         console.log('sending');
@@ -50,6 +59,7 @@
           JSON.stringify(fn),
           "http://51la.com:8080"
         );
+        alert('发送成功，内容是：'+cookieVal)
         return false;
       }
       // window.onload = send;

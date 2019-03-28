@@ -48,8 +48,8 @@ npm run sc
 * 127.0.0.1 jump.com
 * 127.0.0.1 third.com
 
-1. 然后打开<http://jump.com:8080>点击红框按钮
-2. 打开<http://third.com:8081>会弹出cookie！
+1. 然后打开<http://jump.com:8080>点击红框按钮，生成想要记录的唯一id的关联到到User的cookie
+2. 打开<http://third.com:8081>会显示b站已有的cookie
 
 
 如果需要修改为例如`www.51la.com:8080`，也要对应调整。目前是个简单的demo，还有一些需要完善。

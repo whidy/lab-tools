@@ -9,24 +9,29 @@
 <body>
   test page
   <script>
+    /**
+     * 预设的指令
+     */
+    function getCookie() {
+      return document.cookie
+    }
     console.log(' === next log is from:', location.host, ' === ')
     console.log('cookie:', document.cookie)
     // console.log(parent.document.location);
     console.log(' === log end === ')
-    // window.postMessage('hahahahah', 'http://51la.com:8080')
     function receiveMessage(event) {
-      console.log(event.origin);
+      console.log('receive a command "' + event.data + '" from: ', event.origin);
+      /*
+      * 如何证明这个人是可信的？这是最重要的。也许这个问题解决不了就没希望了！
+      */
       if (event.origin !== 'http://' + window.name) return;
-      console.log('bingo! ready to send: ', event.data)
-      event.source.postMessage(document.cookie, event.origin)
+      if (event.data !== 'getCookie') return;
+      console.log('bingo! rungning ' + event.data)
+      // 下面就是这个指令的返回的内容，
+      var message = getCookie()
+      event.source.postMessage(message, event.origin)
     }
-
     window.addEventListener("message", receiveMessage, false);
-    // window.postMessage('hahahahah', 'http://' + window.name)
-    // function receiveMessage(event) {
-    //   if (event.origin !== "http://51la.com:8080/") return;
-    //   console.log('bingo!', event.data)
-    // }
   </script>
 </body>
 </html>

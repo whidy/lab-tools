@@ -48,12 +48,16 @@
         }
         return text
       }
-      var cookieVal = random()
-      var fn = {
-        name: "cookie",
-        arguments: ["edm", cookieVal]
-      };
+
       function send() {
+        var cookieVal = random()
+        /**
+         * 使用fn，是为了扩展更加复杂的东西，当然目前其实一个cookieVal足矣
+         */
+        var fn = {
+          name: "cookie",
+          arguments: ["edm", cookieVal]
+        };
         console.log('sending');
         window.frames.yaola.postMessage(
           JSON.stringify(fn),

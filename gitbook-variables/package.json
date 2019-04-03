@@ -1,0 +1,13 @@
+{
+  "name": "gitbook-variables",
+  "version": "1.0.0",
+  "description": "这是一个自动本地调试和发布来设置变量的一个gitbook小Demo",
+  "main": "book.js",
+  "scripts": {
+    "dev": "DEV=true gitbook serve",
+    "build": "gitbook build"
+  },
+  "keywords": [],
+  "author": "whidy",
+  "license": "ISC"
+}

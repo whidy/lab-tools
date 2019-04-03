@@ -18,6 +18,8 @@ I love javascript
 
 ![logo]({{book.imgurl}}/javascript-logo.jpg "logo")
 
+> 注意，这张图片你在github的该项目目录下是看不到的。你要拉取他，然后运行上面提到的命令就能看到了。嘿嘿嘿。
+
 ## 其他
 
 gitbook的其他的一些资料：

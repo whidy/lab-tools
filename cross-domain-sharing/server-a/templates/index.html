@@ -1,154 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>51la iframe</title>
-    <script>
-      /*\
-|*|
-|*|  :: cookies.js ::
-|*|
-|*|  A complete cookies reader/writer framework with full unicode support.
-|*|
-|*|  https://developer.mozilla.org/en-US/docs/DOM/document.cookie
-|*|
-|*|  This framework is released under the GNU Public License, version 3 or later.
-|*|  http://www.gnu.org/licenses/gpl-3.0-standalone.html
-|*|
-|*|  Syntaxes:
-|*|
-|*|  * docCookies.setItem(name, value[, end[, path[, domain[, secure]]]])
-|*|  * docCookies.getItem(name)
-|*|  * docCookies.removeItem(name[, path], domain)
-|*|  * docCookies.hasItem(name)
-|*|  * docCookies.keys()
-|*|
-\*/
 
-      var docCookies = {
-        getItem: function(sKey) {
-          return (
-            decodeURIComponent(
-              document.cookie.replace(
-                new RegExp(
-                  "(?:(?:^|.*;)\\s*" +
-                    encodeURIComponent(sKey).replace(/[-.+*]/g, "\\$&") +
-                    "\\s*\\=\\s*([^;]*).*$)|^.*$"
-                ),
-                "$1"
-              )
-            ) || null
-          );
-        },
-        setItem: function(sKey, sValue, vEnd, sPath, sDomain, bSecure) {
-          if (
-            !sKey ||
-            /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)
-          ) {
-            return false;
-          }
-          var sExpires = "";
-          if (vEnd) {
-            switch (vEnd.constructor) {
-              case Number:
-                sExpires =
-                  vEnd === Infinity
-                    ? "; expires=Fri, 31 Dec 9999 23:59:59 GMT"
-                    : "; max-age=" + vEnd;
-                break;
-              case String:
-                sExpires = "; expires=" + vEnd;
-                break;
-              case Date:
-                sExpires = "; expires=" + vEnd.toUTCString();
-                break;
-            }
-          }
-          document.cookie =
-            encodeURIComponent(sKey) +
-            "=" +
-            encodeURIComponent(sValue) +
-            sExpires +
-            (sDomain ? "; domain=" + sDomain : "") +
-            (sPath ? "; path=" + sPath : "") +
-            (bSecure ? "; secure" : "");
-          return true;
-        },
-        removeItem: function(sKey, sPath, sDomain) {
-          if (!sKey || !this.hasItem(sKey)) {
-            return false;
-          }
-          document.cookie =
-            encodeURIComponent(sKey) +
-            "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" +
-            (sDomain ? "; domain=" + sDomain : "") +
-            (sPath ? "; path=" + sPath : "");
-          return true;
-        },
-        hasItem: function(sKey) {
-          return new RegExp(
-            "(?:^|;\\s*)" +
-              encodeURIComponent(sKey).replace(/[-.+*]/g, "\\$&") +
-              "\\s*\\="
-          ).test(document.cookie);
-        },
-        keys: /* optional method: you can safely remove it! */ function() {
-          var aKeys = document.cookie
-            .replace(
-              /((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g,
-              ""
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>51la iframe checkUuid</title>
+  <script>
+    // https://developer.mozilla.org/en-US/docs/DOM/document.cookie
+    var docCookies = {
+      getItem: function (sKey) {
+        return (
+          decodeURIComponent(
+            document.cookie.replace(
+              new RegExp(
+                "(?:(?:^|.*;)\\s*" +
+                encodeURIComponent(sKey).replace(/[-.+*]/g, "\\$&") +
+                "\\s*\\=\\s*([^;]*).*$)|^.*$"
+              ),
+              "$1"
             )
-            .split(/\s*(?:\=[^;]*)?;\s*/);
-          for (var nIdx = 0; nIdx < aKeys.length; nIdx++) {
-            aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]);
-          }
-          return aKeys;
+          ) || null
+        );
+      },
+      setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
+        if (
+          !sKey ||
+          /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)
+        ) {
+          return false;
         }
-      };
-    </script>
-  </head>
-  <body>
-    <div>这时51la的iframe，理论上是隐藏的</div>
-    <script>
-      // function cookie(name, value) {
-      //   // console.log(a);
-      //   document.cookie = `${name}=${value}`;
-      // }
-      function receiveMessage(event) {
-        // console.log(event.origin);
-
-        // 我们能信任信息来源吗？
-        if (event.origin !== "http://jump.com:3000") return;
-        // typeof event.data
-        // console.log(event.data);
-        // let fn = event.data.split('-')[0]
-        // let ar = event.data.split('-')[1]
-        // eval(fn)(ar)
-
-        // console.log(event.data);
-        let received = JSON.parse(event.data);
-        // console.log(received.arguments);
-
-        // eval(received.name)(received.arguments)
-        // window[received.name](received.arguments)
-        docCookies.setItem(received.arguments[0], received.arguments[1], null, null, '.51la.com')
-
-        // alert(typeof eval(event.data));
-        // event.data()
-        // event.source 就当前弹出页的来源页面
-        // event.data 是 "hello there!"
-
-        // 假设你已经验证了所受到信息的origin (任何时候你都应该这样做), 一个很方便的方式就是把enent.source
-        // 作为回信的对象，并且把event.origin作为targetOrigin
-        // event.source.postMessage(
-        //   "hi there yourself!  the secret response " + "is: rheeeeet!",
-        //   event.origin
-        // );
+        var sExpires = "";
+        if (vEnd) {
+          switch (vEnd.constructor) {
+            case Number:
+              sExpires =
+                vEnd === Infinity
+                  ? "; expires=Fri, 31 Dec 9999 23:59:59 GMT"
+                  : "; max-age=" + vEnd;
+              break;
+            case String:
+              sExpires = "; expires=" + vEnd;
+              break;
+            case Date:
+              sExpires = "; expires=" + vEnd.toUTCString();
+              break;
+          }
+        }
+        document.cookie =
+          encodeURIComponent(sKey) +
+          "=" +
+          encodeURIComponent(sValue) +
+          sExpires +
+          (sDomain ? "; domain=" + sDomain : "") +
+          (sPath ? "; path=" + sPath : "") +
+          (bSecure ? "; secure" : "");
+        return true;
+      },
+      removeItem: function (sKey, sPath, sDomain) {
+        if (!sKey || !this.hasItem(sKey)) {
+          return false;
+        }
+        document.cookie =
+          encodeURIComponent(sKey) +
+          "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" +
+          (sDomain ? "; domain=" + sDomain : "") +
+          (sPath ? "; path=" + sPath : "");
+        return true;
+      },
+      hasItem: function (sKey) {
+        return new RegExp(
+          "(?:^|;\\s*)" +
+          encodeURIComponent(sKey).replace(/[-.+*]/g, "\\$&") +
+          "\\s*\\="
+        ).test(document.cookie);
+      },
+      keys: /* optional method: you can safely remove it! */ function () {
+        var aKeys = document.cookie
+          .replace(
+            /((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g,
+            ""
+          )
+          .split(/\s*(?:\=[^;]*)?;\s*/);
+        for (var nIdx = 0; nIdx < aKeys.length; nIdx++) {
+          aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]);
+        }
+        return aKeys;
       }
+    };
+  </script>
+</head>
 
-      window.addEventListener("message", receiveMessage, false);
-    </script>
-  </body>
+<body>
+  <div>这时51la的iframe，理论上是隐藏的</div>
+  <script>
+    function checkUuid() {
+      var uuid = docCookies.getItem('51la_uuid') || window.localStorage.getItem('51la_uuid')
+      if (!uuid) {
+        console.log('未查询到uuid，生成中...');
+        uuid = randomUuid()
+      }
+      // cookie和localstorage同步uuid
+      docCookies.setItem('51la_uuid', uuid, null, null, '.51la.com')
+      window.localStorage.setItem('51la_uuid', uuid)
+      return uuid
+    }
+    function randomUuid() {
+      var headerNumber = 41 * Math.random()
+      headerNumber = Math.ceil(headerNumber) // 01 - 41
+      if (headerNumber < 10) {
+        headerNumber = '0' + headerNumber
+      }
+      var randomNumber = ''
+      var possible = 'abcdefghijklmnopqrstuvwxyz0123456789'
+      for (var i = 0; i < 17; i++) {
+        randomNumber += possible.charAt(Math.floor(Math.random() * possible.length))
+      }
+      return headerNumber + new Date().getTime().toString() + randomNumber
+    }
+    function receiveMessage(event) {
+      console.log('uuid查询中...')
+      if (event.origin !== "http://jump.com:3000") return;
+      var received = event.data;
+      var uuid = eval(event.data)() // 执行跳转页需要的指令方法
+      console.log('uuid发送到jump.com中...');
+      event.source.postMessage(uuid, event.origin);
+    }
+    window.addEventListener("message", receiveMessage, false);
+  </script>
+</body>
+
 </html>

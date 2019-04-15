@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>主页</title>
+</head>
+<body>
+  用于检测这个iframe创建执行的速度
+  <h2>result</h2>
+  <p id="startTime"></p>
+  <p id="endTime"></p>
+  <script>
+    var connection = null // 定时器检测通信成功
+    var tryCounts = 0 // 用于测试
+    var timeStart = new Date().getTime()
+    document.getElementById('startTime').innerHTML = '开始执行iframe创建和加载，现在时间戳：' + timeStart
+    var frame = document.createElement('iframe')
+    frame.name = 'test'
+    frame.src = 'http://192.168.1.52:9000/iframe'
+    document.body.appendChild(frame)
+    connection = setInterval(function() {
+    try {
+      tryCounts++
+      window.frames['test'].postMessage(timeStart, 'http://192.168.1.52:9000')
+    } catch (error) {
+      throw error
+    }
+  }, 5)
+  function receiveMessage(event) {
+    if (event.origin !== 'http://192.168.1.52:9000') return
+    clearInterval(connection)
+    document.getElementById('endTime').innerHTML = '整个来回通信时长：' + (parseInt(new Date().getTime()) - timeStart).toString() + 'ms'
+    console.log('整个来回通信时长：' + (parseInt(new Date().getTime()) - timeStart).toString() + 'ms')
+  }
+  addEvent('message', window, receiveMessage)
+  function addEvent(event, elem, func) {
+    if (elem.addEventListener)  // W3C DOM
+      elem.addEventListener(event,func,false);
+    else if (elem.attachEvent) { // IE DOM
+      elem.attachEvent("on"+event, func);
+    }
+  }
+  </script>
+</body>
+</html>

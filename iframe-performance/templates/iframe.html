@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>iframe</title>
+</head>
+<body>
+  这是iframe页面。
+  <script>
+    function receiveMessage(event) {
+      if (event.origin !== 'http://192.168.1.52:9000') return
+      console.log('iframe加载开始执行时长：' + (parseInt(new Date().getTime()) - event.data).toString() + 'ms')
+      event.source.postMessage('ok', event.origin)
+    }
+    addEvent('message', window, receiveMessage)
+    function addEvent(event, elem, func) {
+      if (elem.addEventListener)  // W3C DOM
+        elem.addEventListener(event,func,false);
+      else if (elem.attachEvent) { // IE DOM
+        elem.attachEvent("on"+event, func);
+      }
+    }
+  </script>
+</body>
+</html>

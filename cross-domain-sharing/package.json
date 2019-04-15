@@ -7,7 +7,7 @@
     "sa": "nodemon ./server-a/server.js",
     "sb": "nodemon ./server-b/server.js",
     "sc": "nodemon ./server-c/server.js",
-    "s": "npm run sa && npm run sb && npm run sc"
+    "s": "npm run sa & npm run sb & npm run sc"
   },
   "devDependencies": {
     "art-template": "^4.13.2",

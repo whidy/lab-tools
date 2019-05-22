@@ -1,4 +1,4 @@
-# Introduction
+# 介绍
 
 > 首先你需要安装[gitbook-cli](https://github.com/GitbookIO/gitbook/blob/master/docs/setup.md)，然后才能进行以下测试。
 
@@ -6,7 +6,9 @@
 
 ## 说明
 
-你只需要运行`npm run dev`就可以本地预览你的gitbook效果了。
+> 该项目仅展示书写过程中，用到的全局变量（本项目以`imgurl`变量名示例），来解决发布环境的一些处理。可以特别关注`book.js`和`book.json`和`book.dev.json`文件。
+
+想要预览项目，你只需要运行`npm run dev`就可以本地预览你的gitbook效果了。
 
 如果需要发布，执行`npm run build`就编译成了一个可直接发布到正式线的文档了！
 

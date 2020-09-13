@@ -9,13 +9,13 @@
   "author": "whidy",
   "license": "ISC",
   "devDependencies": {
-    "@hapi/hapi": "^19.0.5",
-    "@hapi/inert": "^5.2.0",
-    "@hapi/vision": "^5.5.2",
-    "handlebars": "^4.7.2"
+    "@hapi/hapi": "^19.2.0",
+    "@hapi/inert": "^5.2.2",
+    "@hapi/vision": "^5.5.4",
+    "handlebars": "^4.7.6"
   },
   "dependencies": {
-    "@hapi/joi": "^17.0.2",
-    "mongoose": "^5.8.9"
+    "@hapi/joi": "^17.1.1",
+    "mongoose": "^5.10.5"
   }
 }

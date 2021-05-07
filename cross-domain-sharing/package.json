@@ -14,7 +14,7 @@
     "@hapi/inert": "^5.2.2",
     "@hapi/vision": "^5.5.4",
     "art-template": "^4.13.2",
-    "handlebars": "^4.7.6",
+    "handlebars": "^4.7.7",
     "koa": "^2.13.0",
     "koa-art-template": "^1.1.1",
     "koa-router": "^7.4.0"
